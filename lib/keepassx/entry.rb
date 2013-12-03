@@ -29,6 +29,9 @@
 
 module Keepassx
   class Entry
+
+    attr_reader :fields
+
     def self.extract_from_payload(header, payload_io)
       groups = []
       header.nentries.times do

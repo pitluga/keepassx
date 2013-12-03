@@ -22,6 +22,9 @@
 #   * FFFF: Group entry terminator, FIELDSIZE must be 0
 module Keepassx
   class Group
+
+    attr_reader :fields
+
     def self.extract_from_payload(header, payload_io)
       groups = []
       header.ngroups.times do

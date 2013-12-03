@@ -3,8 +3,8 @@ module Keepassx
      FIELD_TYPES = [
        [0x0, 'ignored', :null],
        [0x1, 'uuid', :ascii],
-       [0x2, 'groupid', :int],
-       [0x3, 'imageid', :int],
+       [0x2, 'group_id', :int],
+       [0x3, 'image_id', :int],
        [0x4, 'title', :string],
        [0x5, 'url', :string],
        [0x6, 'username', :string],

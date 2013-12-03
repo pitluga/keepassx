@@ -2,8 +2,8 @@ module Keepassx
   class GroupField
     FIELD_TYPES = [
       [0x0, 'ignored', :null],
-      [0x1, 'groupid', :int],
-      [0x2, 'group_name', :string],
+      [0x1, 'group_id', :int],
+      [0x2, 'name', :string],
       [0x3, 'creation_time', :date],
       [0x4, 'lastmod_time', :date],
       [0x5, 'lastacc_time', :date],

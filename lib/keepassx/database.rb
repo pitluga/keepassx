@@ -31,7 +31,7 @@ module Keepassx
     def search(pattern)
       backup = groups.detect { |g| g.name == "Backup" }
       backup_group_id = backup && backup.group_id
-      entries.select { |e| e.group_id != backup_group_id && e.title =~ /#{pattern}/i }
+      entries.select { |e| e.group_id != backup_group_id && e.title.force_encoding('UTF-8') =~ /#{pattern}/i }
     end
 
     def valid?

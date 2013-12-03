@@ -45,12 +45,8 @@ module Keepassx
       @fields.map(&:length).reduce(&:+)
     end
 
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
-    end
-
-    def name
-      @fields.detect { |field| field.name == 'group_name' }.data.chomp("\000")
+    def method_missing(name)
+      @fields.detect { |field| field.name == name.to_s }.data
     end
   end
 end

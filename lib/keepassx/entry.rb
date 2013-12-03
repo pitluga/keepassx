@@ -54,24 +54,8 @@ module Keepassx
       @fields.map(&:length).reduce(&:+)
     end
 
-    def notes
-      @fields.detect { |field| field.name == 'notes' }.data.chomp("\000")
-    end
-
-    def password
-      @fields.detect { |field| field.name == 'password' }.data.chomp("\000")
-    end
-
-    def title
-      @fields.detect { |field| field.name == 'title' }.data.chomp("\000")
-    end
-
-    def username
-      @fields.detect { |field| field.name == 'username' }.data.chomp("\000")
-    end
-
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
+    def method_missing(name)
+      @fields.detect { |field| field.name == name.to_s }.data
     end
 
     def inspect

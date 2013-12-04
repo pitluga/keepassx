@@ -23,6 +23,12 @@ module Keepassx
       payload_io = StringIO.new(@payload)
       @groups = Group.extract_from_payload(header, payload_io)
       @entries = Entry.extract_from_payload(header, payload_io)
+
+      @entries.each do |entry|
+        group = @groups.detect{|g| g.group_id == entry.group_id}
+        group.entries << entry
+        entry.group = group
+      end
       true
     rescue OpenSSL::Cipher::CipherError
       false

@@ -22,8 +22,9 @@
 #   * FFFF: Group entry terminator, FIELDSIZE must be 0
 module Keepassx
   class Group
+    include Keepassx::Fieldable
 
-    attr_reader :fields
+    attr_reader :entries
 
     def self.extract_from_payload(header, payload_io)
       groups = []
@@ -35,21 +36,16 @@ module Keepassx
     end
 
     def initialize(payload_io)
-      fields = []
+      @entries = []
+      @fields = []
       begin
         field = GroupField.new(payload_io)
-        fields << field
+        @fields << field
       end while not field.terminator?
-
-      @fields = fields
     end
 
     def length
       @fields.map(&:length).reduce(&:+)
-    end
-
-    def method_missing(name)
-      @fields.detect { |field| field.name == name.to_s }.data.chomp("\000")
     end
   end
 end

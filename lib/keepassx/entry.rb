@@ -29,19 +29,18 @@
 
 module Keepassx
   class Entry
+    include Keepassx::Fieldable
 
-    attr_reader :fields
+    attr_accessor :group
 
     def self.extract_from_payload(header, payload_io)
-      groups = []
+      entries = []
       header.nentries.times do
-        group = Entry.new(payload_io)
-        groups << group
+        entry = Entry.new(payload_io)
+        entries << entry
       end
-      groups
+      entries
     end
-
-    attr_reader :fields
 
     def initialize(payload_io)
       fields = []
@@ -55,10 +54,6 @@ module Keepassx
 
     def length
       @fields.map(&:length).reduce(&:+)
-    end
-
-    def method_missing(name)
-      @fields.detect { |field| field.name == name.to_s }.data.chomp("\000")
     end
 
     def inspect

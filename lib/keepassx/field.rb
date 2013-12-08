@@ -10,7 +10,8 @@ module Keepassx
       @field_types = field_types
       type_code, @data_length = payload.read(TYPE_CODE_FIELD_SIZE + DATA_LENGTH_FIELD_SIZE).unpack('SI')
       @name, @data_type = parse_type_code(type_code)
-      @data = payload.read(@data_length).dup.force_encoding('UTF-8')
+      data = payload.read(@data_length)
+      @data = data.dup.force_encoding('UTF-8').gsub("\n", ' ') rescue data
     end
 
     def terminator?

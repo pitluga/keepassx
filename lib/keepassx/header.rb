@@ -71,8 +71,25 @@ module Keepassx
       'Unknown'
     end
 
-    def final_key(master_key)
+    def final_key(master_key, keyfile_data=nil)
       key = Digest::SHA2.new.update(master_key).digest
+
+      if keyfile_data
+        if keyfile_data.size == 64 # Hex encoded key
+          keyfile_hash = [keyfile_data].pack("H*")
+        elsif keyfile_data.size == 32 # Raw key
+          keyfile_hash = keyfile_data
+        else
+          keyfile_hash = Digest::SHA2.new.update(keyfile_data).digest
+        end
+
+        if master_key == ""
+          key = keyfile_hash
+        else
+          key = Digest::SHA2.new.update(key + keyfile_hash).digest()
+        end
+      end
+
       aes = FastAES.new(@master_seed2)
 
       @rounds.times do |i|

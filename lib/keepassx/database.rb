@@ -17,8 +17,12 @@ module Keepassx
       @entries.detect { |e| e.title == title }
     end
 
-    def unlock(master_password)
-      @final_key = header.final_key(master_password)
+    def unlock(master_password, keyfile=nil)
+      keyfile_data = nil
+      if keyfile
+        keyfile_data = File.respond_to?(:binread) ? File.binread(keyfile) : File.read(keyfile)
+      end
+      @final_key = header.final_key(master_password, keyfile_data)
       decrypt_payload
       payload_io = StringIO.new(@payload)
       @groups = Group.extract_from_payload(header, payload_io)

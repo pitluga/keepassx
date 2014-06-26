@@ -2,7 +2,6 @@ require 'base64'
 require 'stringio'
 require 'openssl'
 require 'digest/sha2'
-require 'fast-aes'
 
 require 'keepassx/database'
 require 'keepassx/entry'

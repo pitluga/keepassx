@@ -86,14 +86,17 @@ module Keepassx
         if master_key == ""
           key = keyfile_hash
         else
-          key = Digest::SHA2.new.update(key + keyfile_hash).digest()
+          key = Digest::SHA2.new.update(key + keyfile_hash).digest
         end
       end
 
-      aes = FastAES.new(@master_seed2)
+      aes = OpenSSL::Cipher::Cipher.new('AES-256-ECB')
+      aes.encrypt
+      aes.key = @master_seed2
+      aes.padding = 0
 
-      @rounds.times do |i|
-        key = aes.encrypt(key)
+      @rounds.times do
+        key = aes.update(key) + aes.final
       end
 
       key = Digest::SHA2.new.update(key).digest

@@ -8,7 +8,5 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/pitluga/keepassx"
   s.files = `git ls-files`.split("\n")
 
-  s.add_dependency "fast-aes", "~> 0.1"
-
-  s.add_development_dependency "rspec", "2.11.0"
+  s.add_development_dependency "rspec", ">=3.0.0"
 end

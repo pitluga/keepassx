@@ -29,16 +29,18 @@
 
 module Keepassx
   class Entry
-    def self.extract_from_payload(header, payload_io)
-      groups = []
-      header.nentries.times do
-        group = Entry.new(payload_io)
-        groups << group
-      end
-      groups
-    end
+    include Keepassx::Fieldable
 
-    attr_reader :fields
+    attr_accessor :group
+
+    def self.extract_from_payload(header, payload_io)
+      entries = []
+      header.nentries.times do
+        entry = Entry.new(payload_io)
+        entries << entry
+      end
+      entries
+    end
 
     def initialize(payload_io)
       fields = []
@@ -52,26 +54,6 @@ module Keepassx
 
     def length
       @fields.map(&:length).reduce(&:+)
-    end
-
-    def notes
-      @fields.detect { |field| field.name == 'notes' }.data.chomp("\000")
-    end
-
-    def password
-      @fields.detect { |field| field.name == 'password' }.data.chomp("\000")
-    end
-
-    def title
-      @fields.detect { |field| field.name == 'title' }.data.chomp("\000")
-    end
-
-    def username
-      @fields.detect { |field| field.name == 'username' }.data.chomp("\000")
-    end
-
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
     end
 
     def inspect

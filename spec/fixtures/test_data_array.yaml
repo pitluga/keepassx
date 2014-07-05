@@ -1,0 +1,54 @@
+---
+- :title: :Internet
+  :icon: 1
+  :groups:
+  - :title: :Web
+    :icon: 61
+    :groups:
+    - :title: :Wikipedia
+      :icon: 54
+      :groups:
+      - :title: :Amazon
+        :icon: 30
+      :entries:
+      - :title: test entry2
+        :username: testuser
+        :url: http://example.com/testurl
+        :password: testpassword
+        :comment: test comment
+        :group: :Web
+        :uuid: f720371d-15f1-4b9b-918e-68bb83e4407e
+        :lastmod: 2008-09-07 23:40:43
+        :lastaccess: 2008-09-07 23:40:43
+        :creation: 2008-09-07 23:40:43
+      - :title: test entry3
+        :username: testuser3
+        :url: http://example.com/testurl3
+        :password: testpassword3
+        :comment: test comment3
+        :group: :Web
+        :uuid: e720371d-15f1-4c9b-918e-68bb83e4407e
+        :lastmod: 2008-09-07 23:43:43
+        :lastaccess: 2008-09-07 23:20:43
+        :creation: 2008-09-07 23:50:43
+  :entries:
+  - :title: test entry
+    :username: testuser
+    :url: http://example.com/testurl
+    :password: testpassword
+    :comment: test comment
+    :uuid: 2d3fae36-e89f-48bd-8900-389cc01ef248
+    :lastmod: 2008-09-03 23:40:43
+    :lastaccess: 2008-09-03 23:40:43
+    :creation: 2008-09-03 23:40:43
+  - :title: entry2
+    :username: user
+    :url: http://example.com
+    :password: pass2
+    :comment: comment
+    :uuid: 866216ea-3a57-43df-8847-becfc3593939
+    :lastmod: 2008-09-07 22:40:43
+    :lastaccess: 2008-09-07 22:40:43
+    :creation: 2008-09-07 22:40:43
+- :title: :eMail
+  :icon: 19

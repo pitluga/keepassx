@@ -1,16 +1,16 @@
 # Keepassx
 
-Ruby library to read [keepassx](http://www.keepassx.org/) databases.
+This is fork of Tony Pitluga's Ruby API for [keepassx](http://www.keepassx.org/) with read-write support.
 
 ## Installation
 
 ```
-gem install keepassx
+gem install ruby-keepassx
 ```
 or if you use bundler
 
 ```ruby
-gem 'keepassx'
+gem 'ruby-keepassx'
 ```
 
 ## Usage

@@ -21,36 +21,118 @@
 #   * 0009: Flags, 32-bit value, FIELDSIZE = 4
 #   * FFFF: Group entry terminator, FIELDSIZE must be 0
 module Keepassx
+
   class Group
+
+    include Item
+
+    FIELD_CLASS   = Keepassx::GroupField
+    FIELD_MAPPING = {
+        :id         => :groupid,
+        :title      => :group_name,
+        :icon       => :imageid,
+        :lastmod    => :lastmod_time,
+        :lastaccess => :lastacc_time,
+        :creation   => :creation_time,
+        :expire     => :expire_time,
+        :level      => :level,
+        :flags      => :flags
+    }
+
+
     def self.extract_from_payload(header, payload_io)
       groups = []
-      header.ngroups.times do
-        group = Group.new(payload_io)
-        groups << group
-      end
+      header.group_number.times { groups << Group.new(payload_io) }
       groups
     end
 
-    def initialize(payload_io)
-      fields = []
-      begin
-        field = GroupField.new(payload_io)
-        fields << field
-      end while not field.terminator?
-
-      @fields = fields
+    # return
+    def self.fields
+      FIELD_MAPPING.keys
     end
 
-    def length
-      @fields.map(&:length).reduce(&:+)
+
+    attr_reader :parent
+
+
+    def initialize payload
+      super
+
+      if payload.is_a? StringIO
+        decode payload
+
+      elsif payload.is_a? Hash
+        fail "'title' is required" if payload[:title].nil?
+        fail "'id' is required" if payload[:id].nil?
+
+        group_parent = payload.delete :parent
+        @fields      = []
+        default_fields.merge(payload).each do |k, v|
+          @fields << self.send("#{k.to_s}=", v)
+        end
+
+        self.parent = group_parent
+
+      else
+        fail "Expected StringIO or Hash, got #{payload.class}"
+      end
     end
 
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
+
+    FIELD_MAPPING.each do |method, field|
+      define_method method do
+        get field
+      end
+
+      define_method "#{method}=" do |v|
+        set field, v
+      end
     end
 
-    def name
-      @fields.detect { |field| field.name == 'group_name' }.data.chomp("\000")
+
+    def parent= v
+      if v.is_a? Keepassx::Group
+        self.level = v.level + 1 # FIXME: If parent is nil, then set level to 0
+        @parent    = v
+
+      elsif v.nil?
+        self.level = 0 # Assume group located on top level if has no parent
+
+      else
+        fail "Expected Keepassx::Group, got #{v.class}"
+      end
     end
+
+
+    def level
+      value = get :level
+      value.nil? ? 0 : value
+    end
+
+
+    private
+
+    def level= v
+      set :level, v
+    end
+
+
+    def default_fields
+      @default_field ||= {
+          :id         => :unknown,
+          :title      => :unknown,
+          :icon       => 1,
+          # Group's timestamps does not make sense to me,
+          # hence removing that from defaults
+          # :creation   => Time.now,
+          # :lastmod    => Time.now,
+          # :lastaccess => Time.now,
+          # :expire     => Time.local(2999, 12, 28, 23, 59, 59),
+          :level      => 0,
+          :flags      => 0,
+          :terminator => nil
+      }
+    end
+
   end
 end

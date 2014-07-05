@@ -1,2 +1,9 @@
 .bundle
 vendor
+.idea
+spec/fixtures/new_database.kdb
+atlassian-ide-plugin.xml
+ruby-keepassx-0.2.0beta1.gem
+*.gem
+Gemfile.lock
+.yardoc

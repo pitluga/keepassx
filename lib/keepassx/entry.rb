@@ -87,8 +87,8 @@ module Keepassx
         fail "'group' is required" if payload[:group].nil?
         self.group = payload[:group]
 
-        field_list = FIELD_MAPPING.keys
-        data = payload.select { |k| field_list.include? k }
+        fields =  self.class.fields
+        data = payload.reject { |k, _| !fields.include? k }
         data[:group_id] = group.id
 
         @fields = []

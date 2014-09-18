@@ -109,9 +109,9 @@ module Keepassx
         if previous_group.nil? or group.level.eql? 0
           group.parent = nil
 
-          # If group has level greater than parent's level by one,
-          # it gets parent set to the first previous group with level less
-          # than group's level by one
+        # If group has level greater than parent's level by one,
+        # it gets parent set to the first previous group with level less
+        # than group's level by one
         elsif group.level == previous_group.level + 1 or
             group.level == previous_group.level
 
@@ -187,7 +187,7 @@ module Keepassx
       # Remove groups and entries from options, so new group could be
       # initialized from incoming Hash
       fields          = Keepassx::Group.fields
-      group_opts      = opts.select { |k, _| fields.include? k }
+      group_opts      = opts.reject { |k, _| !fields.include? k }
       group           = add_group group_opts
 
       entries.each do |e|

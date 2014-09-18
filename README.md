@@ -26,3 +26,6 @@ puts database.entry("entry's title").password
 ## Security Warning
 
 No attempt is made to protect the memory used by this library; there may be something we can do with libgcrypt's secure-malloc functions, but right now your master password is unencrypted in ram that could possibly be paged to disk.
+
+
+[![Build Status](https://travis-ci.org/tioteath/ruby-keepassx.svg?branch=master)](https://travis-ci.org/tioteath/ruby-keepassx)

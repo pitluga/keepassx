@@ -169,7 +169,6 @@ module Keepassx
 
 
     def ascii= value
-      # TODO: Add spec
       @data = [value].pack('H*')
     end
 

@@ -124,7 +124,7 @@ module Keepassx
         match_number = opts.length
         items = []
         opts.each do |k, v|
-          items += Array item_list.select { |e| e.send(k).eql?(v) }
+          items += Array(item_list.select { |e| e.send(k).eql?(v) })
         end
 
         buffer = Hash.new 0

@@ -16,9 +16,8 @@ describe Keepassx::Database do
     subject { Keepassx }
     let(:db1) { subject.new data_array }
     let(:db2) { subject.new data_array }
+
     it 'has the same checksum for the same data' do
-      # warn "db1: #{File.write '/tmp/db1', db1.entries.inspect}>><<"
-      # warn "db2: #{File.write '/tmp/db2', db2.entries.inspect}>><<"
       expect(db1.checksum).to eq db2.checksum
     end
   end

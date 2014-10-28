@@ -1,0 +1,36 @@
+:path: /tmp/new_database.kdb
+:groups:
+- :title: :Internet
+  :icon: 1
+- :title: :Web
+  :icon: 61
+  :parent: :Internet
+- :title: :Wikipedia
+  :icon: 54
+  :parent: :Web
+- :title: :eMail
+  :icon: 19
+:entries:
+- :title: test entry2
+  :username: testuser
+  :url: http://example.com/testurl
+  :password: testpassword
+  :comment: test comment
+  :group: :Wikipedia
+- :title: test entry
+  :username: testuser
+  :url: http://example.com/testurl
+  :password: testpassword
+  :comment: test comment
+  :group: :Internet
+- :title: test entry
+  :username: testuser
+  :url: http://example.com/testurl
+  :password: testpassword
+  :comment: test comment
+  :group: :Internet
+- :title: entry2
+  :username: user
+  :url: http://example.com
+  :password: pass2
+  :comment: comment

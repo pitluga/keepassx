@@ -61,7 +61,7 @@ describe Keepassx::Entry do
 
     it 'returns Hash entry representation' do
       expect(entry_schema.validate? test_entry.to_hash).to be true
-    end  unless RUBY_VERSION =~ /1.8/ # Respect does not support ruby 1.8.x
+    end unless RUBY_VERSION =~ /1.8/ # Respect does not support ruby 1.8.x
 
     it 'set timestamps properly' do
       expect(test_entry.to_hash[:creation]).to eq test_date

@@ -11,7 +11,7 @@ module Keepassx
 
     def self.open opts
       path = opts.to_s
-      fail "File #{path} does not exist." unless File.exist? path
+      fail IOError, "File #{path} does not exist." unless File.exist? path
       db = self.new path
       return db unless block_given?
       yield db
@@ -119,7 +119,7 @@ module Keepassx
         items = item_list
 
       else
-        opts = {:title => opts.to_s} if opts.is_a? String or opts.is_a? Symbol
+        opts = { :title => opts.to_s } if opts.is_a? String or opts.is_a? Symbol
 
         match_number = opts.length
         items = []
@@ -234,6 +234,7 @@ module Keepassx
         opts = deep_copy opts
         opts[:id] = next_group_id unless opts.has_key? :id
 
+        # Replace parent, which is specified by symbol with actual group
         if opts[:parent].is_a? Symbol
           group = self.group opts[:parent]
           fail "Group #{opts[:parent].inspect} does not exist" if group.nil?
@@ -464,5 +465,12 @@ module Keepassx
       result
     end
 
+
+    # Dump YAML representation of database.
+    #
+    # @return [String]
+    def to_yaml
+      YAML.dump to_a
+    end
   end
 end

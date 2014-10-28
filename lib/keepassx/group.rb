@@ -92,11 +92,12 @@ module Keepassx
 
     def parent= v
       if v.is_a? Keepassx::Group
-        self.level = v.level + 1 # FIXME: If parent is nil, then set level to 0
+        self.level = v.level + 1
         @parent    = v
 
       elsif v.nil?
-        self.level = 0 # Assume group located on top level if has no parent
+        # Assume, group is located at the top level, in case it has no parent
+        self.level = 0
 
       else
         fail "Expected Keepassx::Group, got #{v.class}"

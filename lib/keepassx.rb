@@ -4,6 +4,7 @@ require 'openssl'
 require 'digest/sha2'
 require 'securerandom'
 require 'rexml/document'
+require 'yaml'
 
 # Add backward compatibility stuff
 if RUBY_VERSION =~ /1\.8/

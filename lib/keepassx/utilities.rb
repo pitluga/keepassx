@@ -182,21 +182,23 @@ module Keepassx
     # FIXME: Rename the method
     # See spec/fixtures/test_data_array.yaml for data example
     def parse_data_array opts
-      groups, entries = opts[:groups], opts[:entries]
+      groups, entries, parent = opts[:groups], opts[:entries], opts[:parent]
 
       # Remove groups and entries from options, so new group could be
       # initialized from incoming Hash
       fields          = Keepassx::Group.fields
       group_opts      = opts.reject { |k, _| !fields.include? k }
       group           = add_group group_opts
+      group.parent    = parent unless parent.nil?
 
       entries.each do |e|
-        entry = e.clone
-        add_entry entry.merge(:group => group)
+        add_entry e.merge(:group => group)
       end unless entries.nil?
 
       # Recursively proceed each child group
-      groups.each { |g| parse_data_array g } unless groups.nil?
+      groups.each do |g|
+        parse_data_array g.merge(:parent => group)
+      end unless groups.nil?
 
     end
 

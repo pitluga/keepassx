@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Ruby API access for KeePassX databases'
   s.description = 'This is fork of Tony Pitluga\'s ' \
       'Ruby API for keepassx with read-write support.'
-  s.version     = '0.2.1'
+  s.version     = '0.2.2beta1'
   s.authors     = ['Tony Pitluga', 'Paul Hinze', 'Tio Teath']
   s.email       = ['tony.pitluga@gmail.com', 'paul.t.hinze@gmail.com',
       'tioteath@gmail.com']
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   end
 
   s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'pry', '~> 0'
+  s.add_development_dependency 'pry', '~> 0.10.1'
   s.add_development_dependency 'rake', '~> 0.8', '>= 0.8.7'
   s.add_development_dependency 'respect', '~> 0.1', '>= 0.1.1'
   # s.add_development_dependency 'rspec-prof', '~> 0'

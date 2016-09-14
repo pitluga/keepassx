@@ -1,0 +1,76 @@
+---
+- id: 503880962
+  name: Internet
+  icon: 1
+  level: 0
+  flags: 0
+  entries:
+  - id: 678f624ea0204444f775fb252d754ff3
+    group_id: 503880962
+    icon: 1
+    name: test entry
+    url: http://example.com/testurl
+    username: testuser
+    password: testpassword
+    notes: test comment
+  - id: 8bfa7a503bb6046b1ab6331f3de3bdeb
+    group_id: 503880962
+    icon: 1
+    name: entry2
+    url: http://example.com
+    username: user
+    password: pass2
+    notes: comment
+  - id: '00000000000000000000000000000000'
+    group_id: 503880962
+    icon: 0
+    name: Meta-Info
+    url: "$"
+    username: SYSTEM
+    password: ''
+    notes: KPX_CUSTOM_ICONS_4
+  - id: '00000000000000000000000000000000'
+    group_id: 503880962
+    icon: 0
+    name: Meta-Info
+    url: "$"
+    username: SYSTEM
+    password: ''
+    notes: KPX_GROUP_TREE_STATE
+  groups:
+  - id: 3210836170
+    name: Web
+    icon: 61
+    level: 1
+    flags: 0
+    entries:
+    - id: fb3bd253ca650a0faaf8b1c94ffdd648
+      group_id: 3210836170
+      icon: 20
+      name: test entry 2
+      url: ''
+      username: ''
+      password: ''
+      notes: ''
+    groups:
+    - id: 1532025522
+      name: Wikipedia
+      icon: 54
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+- id: 2863278214
+  name: eMail
+  icon: 19
+  level: 0
+  flags: 0
+  entries: []
+  groups: []
+- id: 1190700005
+  name: Backup
+  icon: 4
+  level: 0
+  flags: 0
+  entries: []
+  groups: []

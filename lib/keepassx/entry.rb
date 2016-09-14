@@ -1,10 +1,10 @@
 # One entry: [FIELDTYPE(FT)][FIELDSIZE(FS)][FIELDDATA(FD)]
 #            [FT+FS+(FD)][FT+FS+(FD)][FT+FS+(FD)][FT+FS+(FD)][FT+FS+(FD)]...
-
+#
 # [ 2 bytes] FIELDTYPE
 # [ 4 bytes] FIELDSIZE, size of FIELDDATA in bytes
 # [ n bytes] FIELDDATA, n = FIELDSIZE
-
+#
 # Notes:
 # - Strings are stored in UTF-8 encoded form and are null-terminated.
 # - FIELDTYPE can be one of the following identifiers:
@@ -25,57 +25,85 @@
 #   * 000D: Binary description UTF-8 encoded string
 #   * 000E: Binary data
 #   * FFFF: Entry terminator, FIELDSIZE must be 0
-#   '''
 
 module Keepassx
-  class Entry
-    def self.extract_from_payload(header, payload_io)
-      groups = []
-      header.nentries.times do
-        group = Entry.new(payload_io)
-        groups << group
+  class Entry < Fieldable
+
+    set_field_descriptor Keepassx::Field::Entry
+
+    attr_reader :group
+
+    def initialize(payload)
+      super do
+        # Do some validation
+        raise ArgumentError, "'name' is required (type: string)" unless valid_string?(payload[:name])
+        raise ArgumentError, "'group_id' is required (type: integer)" unless payload[:group] || valid_integer?(payload[:group_id])
+
+        # First set @group and @group_id.
+        # Remove key from payload to not interfere with KeePassX fields format
+        self.group = payload.delete(:group)
+
+        # Add group_id key to respect KeePassX fields format
+        payload[:group_id] = group.id
+
+        # Build list of fields
+        @fields = build_payload(payload)
       end
-      groups
     end
 
-    attr_reader :fields
 
-    def initialize(payload_io)
-      fields = []
-      begin
-        field = EntryField.new(payload_io)
-        fields << field
-      end while not field.terminator?
+    class << self
 
-      @fields = fields
+      def extract_from_payload(header, payload)
+        entries = []
+        header.entries_count.times { entries << Entry.new(payload) }
+        entries
+      end
+
     end
 
-    def length
-      @fields.map(&:length).reduce(&:+)
+
+    def group=(value)
+      raise ArgumentError, "Expected Keepassx::Group, got #{value.class}" unless value.is_a?(Keepassx::Group)
+      self.group_id = value.id
+      @group        = value
+      value
     end
 
-    def notes
-      @fields.detect { |field| field.name == 'notes' }.data.chomp("\000")
-    end
 
-    def password
-      @fields.detect { |field| field.name == 'password' }.data.chomp("\000")
-    end
+    private
 
-    def title
-      @fields.detect { |field| field.name == 'title' }.data.chomp("\000")
-    end
 
-    def username
-      @fields.detect { |field| field.name == 'username' }.data.chomp("\000")
-    end
+      def default_fields
+        @default_fields ||= {
+          id:              SecureRandom.uuid.gsub('-', ''),
+          group_id:        nil,
+          icon:            1,
+          name:            nil,
+          url:             nil,
+          username:        nil,
+          password:        nil,
+          notes:           nil,
+          creation_time:   Time.now,
+          last_mod_time:   Time.now,
+          last_acc_time:   Time.now,
+          expiration_time: Time.local(2999, 12, 28, 23, 59, 59),
+          binary_desc:     nil,
+          binary_data:     nil,
+          terminator:      nil
+        }
+      end
 
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
-    end
 
-    def inspect
-      "Entry<title=#{title.inspect}, username=[FILTERED], password=[FILTERED], notes=#{notes.inspect}>"
-    end
+      # Keep this method private in order to avoid group/group_id divergence
+      def group_id=(v)
+        set :group_id, v
+      end
+
+
+      def exclusion_list
+        super.concat(%w(binary_desc binary_data))
+      end
+
   end
 end

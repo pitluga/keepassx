@@ -1,0 +1,113 @@
+---
+- :name: Internet
+  :icon: 1
+  :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+  :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+  :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+  :groups:
+  - :name: Web
+    :icon: 61
+    :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    :groups:
+    - :name: Amazon
+      :icon: 30
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    - :name: Wikipedia
+      :icon: 54
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+      :entries:
+      - :name: Wikipedia URL 1
+        :username: testwiki1
+        :url: http://wiki.com/testurl1
+        :password: testwiki1
+        :notes: test wiki comment1
+        :group: Wikipedia
+        :id: f720371d-15f1-4b9b-918e-68bb83e4407e
+        :last_mod_time: 2008-09-07 23:40:43
+        :last_acc_time: 2008-09-07 23:40:43
+        :creation_time: 2008-09-07 23:40:43
+      - :name: Wikipedia URL 2
+        :username: testwiki2
+        :url: http://wiki.com/testurl2
+        :password: testwiki2
+        :notes: test wiki comment2
+        :group: Wikipedia
+        :id: e720371d-15f1-4c9b-918e-68bb83e4407e
+        :last_mod_time: 2008-09-07 23:43:43
+        :last_acc_time: 2008-09-07 23:20:43
+        :creation_time: 2008-09-07 23:50:43
+  :entries:
+  - :name: Internet URL 1
+    :username: testuser1
+    :url: http://example.com/testurl1
+    :password: testuser1
+    :notes: test comment1
+    :id: 2d3fae36-e89f-48bd-8900-389cc01ef248
+    :group: Internet
+    :last_mod_time: 2008-09-03 23:40:43
+    :last_acc_time: 2008-09-03 23:40:43
+    :creation_time: 2008-09-03 23:40:43
+  - :name: Internet URL 2
+    :username: testuser2
+    :url: http://example.com/testurl2
+    :password: testuser2
+    :notes: text comment2
+    :id: 866216ea-3a57-43df-8847-becfc3593939
+    :group: Internet
+    :last_mod_time: 2008-09-07 22:40:43
+    :last_acc_time: 2008-09-07 22:40:43
+    :creation_time: 2008-09-07 22:40:43
+- :name: eMail
+  :icon: 19
+  :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+  :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+  :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+  :groups:
+  - :name: Personnal
+    :icon: 61
+    :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    :groups:
+    - :name: Microsoft
+      :icon: 80
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    - :name: Apple
+      :icon: 81
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    - :name: Google
+      :icon: 82
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+  - :name: Profesionnal
+    :icon: 61
+    :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+    :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    :groups:
+    - :name: Microsoft
+      :icon: 70
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    - :name: Apple
+      :icon: 71
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00
+    - :name: Google
+      :icon: 72
+      :creation_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_mod_time: 2016-09-03 21:09:06.000000000 +02:00
+      :last_acc_time: 2016-09-03 21:09:06.000000000 +02:00

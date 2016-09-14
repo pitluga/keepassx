@@ -20,37 +20,107 @@
 #   * 0008: Level, FIELDSIZE = 2
 #   * 0009: Flags, 32-bit value, FIELDSIZE = 4
 #   * FFFF: Group entry terminator, FIELDSIZE must be 0
+
 module Keepassx
-  class Group
-    def self.extract_from_payload(header, payload_io)
-      groups = []
-      header.ngroups.times do
-        group = Group.new(payload_io)
-        groups << group
+  class Group < Fieldable
+
+    set_field_descriptor Keepassx::Field::Group
+
+    attr_accessor :entries
+    attr_reader   :parent
+
+    def initialize(payload)
+      @parent  = nil
+      @entries = []
+
+      super do
+        # Do some validation
+        raise ArgumentError, "'id' is required (type: integer)" unless valid_integer?(payload[:id])
+        raise ArgumentError, "'name' is required (type: string)" unless valid_string?(payload[:name])
+
+        # First set @parent and @level.
+        # Remove key from payload to not interfere with KeePassX fields format
+        self.parent = payload.delete(:parent)
+
+        # Build list of fields
+        @fields = build_payload(payload)
       end
-      groups
     end
 
-    def initialize(payload_io)
-      fields = []
-      begin
-        field = GroupField.new(payload_io)
-        fields << field
-      end while not field.terminator?
 
-      @fields = fields
+    class << self
+
+      def extract_from_payload(header, payload)
+        groups = []
+        header.groups_count.times { groups << Group.new(payload) }
+        groups
+      end
+
     end
 
-    def length
-      @fields.map(&:length).reduce(&:+)
+
+    def parent=(value)
+      raise ArgumentError, "Expected Keepassx::Group or nil, got #{value.class}" unless valid_parent?(value)
+
+      if value.is_a?(Keepassx::Group)
+        self.level = value.level + 1
+        @parent    = value
+
+      elsif value.nil?
+        # Assume, group is located at the top level, in case it has no parent
+        self.level = 0
+        @parent    = nil
+      end
     end
 
-    def group_id
-      @fields.detect { |field| field.name == 'groupid' }.data
+
+    # Redefine #level method to return 0 instead of nil
+    def level
+      value = get :level
+      value.nil? ? 0 : value
     end
 
-    def name
-      @fields.detect { |field| field.name == 'group_name' }.data.chomp("\000")
+
+    def ==(value)
+      return false if value.nil?
+      parent == value.parent &&
+      name   == value.name &&
+      id     == value.id &&
+      level  == value.level &&
+      icon   == value.icon
     end
+
+
+    private
+
+
+      # Redefine #level= to make it private :
+      # Setting group level only is a non-sense as it depends
+      # on parent group.
+      def level=(v)
+        set :level, v
+      end
+
+
+      def default_fields
+        @default_field ||= {
+          id:              :unknown,
+          name:            :unknown,
+          creation_time:   Time.now,
+          last_mod_time:   Time.now,
+          last_acc_time:   Time.now,
+          expiration_time: Time.local(2999, 12, 28, 23, 59, 59),
+          icon:            1,
+          level:           0,
+          flags:           0,
+          terminator:      nil
+        }
+      end
+
+
+      def valid_parent?(object)
+        object.is_a?(Keepassx::Group) || object.nil?
+      end
+
   end
 end

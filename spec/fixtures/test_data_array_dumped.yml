@@ -1,0 +1,124 @@
+---
+- id: 1
+  name: Internet
+  icon: 1
+  level: 0
+  flags: 0
+  entries:
+  - id: 2d3fae36de89fd48bdd8900d389cc01ef248
+    group_id: 1
+    icon: 1
+    name: Internet URL 1
+    url: http://example.com/testurl1
+    username: testuser1
+    password: testuser1
+    notes: test comment1
+  - id: 866216ead3a57d43dfd8847dbecfc3593939
+    group_id: 1
+    icon: 1
+    name: Internet URL 2
+    url: http://example.com/testurl2
+    username: testuser2
+    password: testuser2
+    notes: text comment2
+  groups:
+  - id: 2
+    name: Web
+    icon: 61
+    level: 1
+    flags: 0
+    entries: []
+    groups:
+    - id: 3
+      name: Amazon
+      icon: 30
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+    - id: 4
+      name: Wikipedia
+      icon: 54
+      level: 2
+      flags: 0
+      entries:
+      - id: f720371dd15f1d4b9bd918ed68bb83e4407e
+        group_id: 4
+        icon: 1
+        name: Wikipedia URL 1
+        url: http://wiki.com/testurl1
+        username: testwiki1
+        password: testwiki1
+        notes: test wiki comment1
+      - id: e720371dd15f1d4c9bd918ed68bb83e4407e
+        group_id: 4
+        icon: 1
+        name: Wikipedia URL 2
+        url: http://wiki.com/testurl2
+        username: testwiki2
+        password: testwiki2
+        notes: test wiki comment2
+      groups: []
+- id: 5
+  name: eMail
+  icon: 19
+  level: 0
+  flags: 0
+  entries: []
+  groups:
+  - id: 6
+    name: Personnal
+    icon: 61
+    level: 1
+    flags: 0
+    entries: []
+    groups:
+    - id: 7
+      name: Microsoft
+      icon: 80
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+    - id: 8
+      name: Apple
+      icon: 81
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+    - id: 9
+      name: Google
+      icon: 82
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+  - id: 10
+    name: Profesionnal
+    icon: 61
+    level: 1
+    flags: 0
+    entries: []
+    groups:
+    - id: 11
+      name: Microsoft
+      icon: 70
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+    - id: 12
+      name: Apple
+      icon: 71
+      level: 2
+      flags: 0
+      entries: []
+      groups: []
+    - id: 13
+      name: Google
+      icon: 72
+      level: 2
+      flags: 0
+      entries: []
+      groups: []

@@ -1,5 +1,5 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
 gemspec
 
-gem 'rake', '0.8.7'
+gem 'codeclimate-test-reporter', group: :test, require: false

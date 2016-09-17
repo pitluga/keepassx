@@ -32,37 +32,59 @@
 # - aContentsHash: "plain contents" refers to the database file, minus the
 #   database header, decrypted by FinalKey.
 #   * PlainContents = Decrypt_with_FinalKey(DatabaseFile - DatabaseHeader)
+
 module Keepassx
   class Header
 
     ENCRYPTION_FLAGS = [
-       [1 , 'SHA2'    ],
-       [2 , 'Rijndael'],
-       [2 , 'AES'     ],
-       [4 , 'ArcFour' ],
-       [8 , 'TwoFish' ]
-    ]
+      [1 , 'SHA2'    ],
+      [2 , 'Rijndael'],
+      [2 , 'AES'     ],
+      [4 , 'ArcFour' ],
+      [8 , 'TwoFish' ],
+    ].freeze
 
-    attr_reader :encryption_iv
-    attr_reader :ngroups, :nentries
+    SIGNATURES = [0x9AA2D903, 0xB54BFB65].freeze
 
-    def initialize(header_bytes)
-      @signature1 = header_bytes[0..4].unpack('L*').first
-      @signature2 = header_bytes[4..8].unpack('L*').first
-      @flags   = header_bytes[8..12].unpack('L*').first
-      @version = header_bytes[12..16].unpack('L*').first
-      @master_seed = header_bytes[16...32]
-      @encryption_iv = header_bytes[32...48]
-      @ngroups = header_bytes[48..52].unpack('L*').first
-      @nentries = header_bytes[52..56].unpack('L*').first
-      @contents_hash = header_bytes[56..88]
-      @master_seed2 = header_bytes[88...120]
-      @rounds = header_bytes[120..-1].unpack('L*').first
+    attr_reader   :encryption_iv
+    attr_accessor :groups_count
+    attr_accessor :entries_count
+    attr_accessor :content_hash
+
+
+    def initialize(header_bytes = nil)
+      if header_bytes.nil?
+        @signature1    = SIGNATURES[0]
+        @signature2    = SIGNATURES[1]
+        @flags         = 3 # SHA2 hashing, AES encryption
+        @version       = 0x30002
+        @master_seed   = SecureRandom.random_bytes(16)
+        @encryption_iv = SecureRandom.random_bytes(16)
+        @groups_count  = 0
+        @entries_count = 0
+        @master_seed2  = SecureRandom.random_bytes(32)
+        @rounds        = 50000
+      else
+        header_bytes   = StringIO.new(header_bytes)
+        @signature1    = header_bytes.read(4).unpack('L*').first
+        @signature2    = header_bytes.read(4).unpack('L*').first
+        @flags         = header_bytes.read(4).unpack('L*').first
+        @version       = header_bytes.read(4).unpack('L*').first
+        @master_seed   = header_bytes.read(16)
+        @encryption_iv = header_bytes.read(16)
+        @groups_count  = header_bytes.read(4).unpack('L*').first
+        @entries_count = header_bytes.read(4).unpack('L*').first
+        @content_hash  = header_bytes.read(32)
+        @master_seed2  = header_bytes.read(32)
+        @rounds        = header_bytes.read(4).unpack('L*').first
+      end
     end
+
 
     def valid?
-      @signature1 == 0x9AA2D903 && @signature2 == 0xB54BFB65
+      @signature1 == SIGNATURES[0] && @signature2 == SIGNATURES[1]
     end
+
 
     def encryption_type
       ENCRYPTION_FLAGS.each do |(flag_mask, encryption_type)|
@@ -71,34 +93,40 @@ module Keepassx
       'Unknown'
     end
 
-    def final_key(master_key, keyfile_data=nil)
+
+    def final_key(master_key)
       key = Digest::SHA2.new.update(master_key).digest
-
-      if keyfile_data
-        if keyfile_data.size == 64 # Hex encoded key
-          keyfile_hash = [keyfile_data].pack("H*")
-        elsif keyfile_data.size == 32 # Raw key
-          keyfile_hash = keyfile_data
-        else
-          keyfile_hash = Digest::SHA2.new.update(keyfile_data).digest
-        end
-
-        if master_key == ""
-          key = keyfile_hash
-        else
-          key = Digest::SHA2.new.update(key + keyfile_hash).digest()
-        end
-      end
-
-      aes = FastAES.new(@master_seed2)
+      aes = OpenSSL::Cipher::Cipher.new('AES-256-ECB')
+      aes.encrypt
+      aes.key = @master_seed2
+      aes.padding = 0
 
       @rounds.times do |i|
-        key = aes.encrypt(key)
+        key = aes.update(key) + aes.final
       end
 
       key = Digest::SHA2.new.update(key).digest
       key = Digest::SHA2.new.update(@master_seed + key).digest
       key
     end
+
+
+    # Return encoded header
+    #
+    # @return [String] Encoded header representation.
+    def encode
+      [@signature1].pack('L*')    <<
+      [@signature2].pack('L*')    <<
+      [@flags].pack('L*')         <<
+      [@version].pack('L*')       <<
+      @master_seed                <<
+      @encryption_iv              <<
+      [@groups_count].pack('L*')  <<
+      [@entries_count].pack('L*') <<
+      @content_hash               <<
+      @master_seed2               <<
+      [@rounds].pack('L*')
+    end
+
   end
 end

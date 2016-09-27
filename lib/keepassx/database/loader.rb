@@ -32,16 +32,17 @@ module Keepassx
 
       # Unlock database.
       #
-      # @param password [String] Datbase password.
+      # @param password [String] Database password.
       # @return [Boolean] Whether or not password validation successfull.
-      def unlock(password)
+      def unlock(password, keyfile = nil)
         return true unless locked?
 
         # Store password as we'll need it to dump/save database
         @password = password
+        keyfile_data = keyfile ? read_file(keyfile) : nil
 
         # Uncrypt database
-        final_key  = header.final_key(password)
+        final_key  = header.final_key(password, keyfile_data)
         @payload   = decrypt_payload(@encrypted_payload, final_key)
         payload_io = StringIO.new(@payload)
 

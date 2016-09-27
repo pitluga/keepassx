@@ -94,8 +94,19 @@ module Keepassx
     end
 
 
-    def final_key(master_key)
+    def final_key(master_key, keyfile_data = nil)
       key = Digest::SHA2.new.update(master_key).digest
+
+      if keyfile_data
+        keyfile_hash = extract_keyfile_hash(keyfile_data)
+
+        if master_key == ''
+          key = keyfile_hash
+        else
+          key = Digest::SHA2.new.update(key + keyfile_hash).digest
+        end
+      end
+
       aes = OpenSSL::Cipher::Cipher.new('AES-256-ECB')
       aes.encrypt
       aes.key = @master_seed2
@@ -127,6 +138,24 @@ module Keepassx
       @master_seed2               <<
       [@rounds].pack('L*')
     end
+
+
+    private
+
+
+      def extract_keyfile_hash(keyfile_data)
+        # Hex encoded key
+        if keyfile_data.size == 64
+          [keyfile_data].pack('H*')
+
+        # Raw key
+        elsif keyfile_data.size == 32
+          keyfile_data
+
+        else
+          Digest::SHA2.new.update(keyfile_data).digest
+        end
+      end
 
   end
 end

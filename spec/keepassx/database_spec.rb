@@ -15,6 +15,9 @@ describe Keepassx::Database do
   let(:test_group) { build(:group) }
   let(:test_entry) { build(:entry) }
 
+  let(:keyfile_db) { Keepassx::Database.new(KEYFILE_DATABASE_PATH) }
+  let(:keyfile) { File.join(FIXTURE_PATH, 'database_with_key.key') }
+  let(:keyfile2) { File.join(FIXTURE_PATH, 'database_with_key2.key') }
 
   describe 'empty database' do
     before :each do
@@ -177,12 +180,32 @@ describe Keepassx::Database do
 
 
   describe '#unlock' do
-    it 'returns true when the master password is correct' do
-      expect(test_db.unlock('testmasterpassword')).to be true
+    context 'when no key file is needed' do
+      it 'returns true when the master password is correct' do
+        expect(test_db.unlock('testmasterpassword')).to be true
+      end
+
+      it 'returns false when the master password is incorrect' do
+        expect(test_db.unlock('bad password')).to be false
+      end
     end
 
-    it 'returns false when the master password is incorrect' do
-      expect(test_db.unlock('bad password')).to be false
+    context 'when a key file is needed' do
+      it 'returns true when the master password is correct and a valid keyfile is given' do
+        expect(keyfile_db.unlock('test', keyfile)).to be true
+      end
+
+      it 'returns false when the master password is incorrect' do
+        expect(keyfile_db.unlock('bad password', keyfile)).to be false
+      end
+
+      it 'returns false when the keyfile is missing' do
+        expect(keyfile_db.unlock('test')).to be false
+      end
+
+      it 'returns false when the keyfile dont match' do
+        expect(keyfile_db.unlock('test', keyfile2)).to be false
+      end
     end
   end
 

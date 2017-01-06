@@ -107,7 +107,7 @@ module Keepassx
         end
       end
 
-      aes = OpenSSL::Cipher::Cipher.new('AES-256-ECB')
+      aes = OpenSSL::Cipher.new('AES-256-ECB')
       aes.encrypt
       aes.key = @master_seed2
       aes.padding = 0

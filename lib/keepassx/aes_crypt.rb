@@ -3,7 +3,7 @@ module Keepassx
     module_function
 
     def decrypt(encrypted_data, key, iv, cipher_type)
-      aes = OpenSSL::Cipher::Cipher.new(cipher_type)
+      aes = OpenSSL::Cipher.new(cipher_type)
       aes.decrypt
       aes.key = key
       aes.iv = iv unless iv.nil?
@@ -12,7 +12,7 @@ module Keepassx
 
 
     def encrypt(data, key, iv, cipher_type)
-      aes = OpenSSL::Cipher::Cipher.new(cipher_type)
+      aes = OpenSSL::Cipher.new(cipher_type)
       aes.encrypt
       aes.key = key
       aes.iv = iv unless iv.nil?

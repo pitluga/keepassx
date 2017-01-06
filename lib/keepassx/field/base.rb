@@ -164,10 +164,10 @@ module Keepassx
 
 
         def date=(value)
-          raise ArgumentError, "Expected: Time, String or Fixnum, got: '#{value.class}'." unless [Time, String, Fixnum].include?(value.class)
+          raise ArgumentError, "Expected: Time, String or Integer, got: '#{value.class}'." unless [Time, String, Integer].include?(value.class)
 
           value = Time.parse(value) if value.is_a?(String)
-          value = Time.at(value) if value.is_a?(Fixnum)
+          value = Time.at(value) if value.is_a?(Integer)
 
           sec, min, hour, day, month, year = value.to_a
 

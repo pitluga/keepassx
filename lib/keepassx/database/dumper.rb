@@ -34,7 +34,9 @@ module Keepassx
         raise ArgumentError, 'File path is not set' if new_path.nil?
         raise ArgumentError, 'Password is not set' if new_password.nil?
 
-        File.write new_path, dump(new_password)
+        File.open(new_path, 'wb') do |file|
+          file.write dump(new_password)
+        end
       end
 
 

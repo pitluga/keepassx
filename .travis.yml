@@ -9,3 +9,5 @@ rvm:
 env:
   global:
     - JRUBY_OPTS="--debug"
+after_success:
+  - bundle exec codeclimate-test-reporter

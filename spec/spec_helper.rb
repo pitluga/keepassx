@@ -1,5 +1,4 @@
 require 'simplecov'
-require 'codeclimate-test-reporter'
 require 'rspec'
 require 'respect'
 require 'factory_girl'

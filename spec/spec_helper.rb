@@ -3,17 +3,12 @@ require 'rspec'
 require 'respect'
 require 'factory_girl'
 
-## Configure SimpleCov
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-])
-
-## Start Simplecov
+# Start Simplecov
 SimpleCov.start do
   add_filter '/spec/'
 end
 
-## Configure RSpec
+# Configure RSpec
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
@@ -28,7 +23,7 @@ RSpec.configure do |config|
   end
 end
 
-## Load lib
+# Load lib
 require 'keepassx'
 require_relative 'factories'
 

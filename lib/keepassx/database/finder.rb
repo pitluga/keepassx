@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Keepassx
   class Database
     module Finder
@@ -39,7 +41,7 @@ module Keepassx
 
       def search(pattern)
         backup = groups.find { |g| g.name == 'Backup' }
-        backup_group_id = backup && backup.id
+        backup_group_id = backup&.id
         entries.select { |e| e.group_id != backup_group_id && e.name =~ /#{pattern}/i }
       end
 

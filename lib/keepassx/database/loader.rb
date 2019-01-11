@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Keepassx
   class Database
     module Loader
@@ -122,10 +124,10 @@ module Keepassx
 
 
         # See spec/fixtures/test_data_array.yaml for data example
-        # rubocop:disable Metrics/MethodLength, Style/MultilineIfModifier
+        # rubocop:disable Metrics/MethodLength
         def parse_data(opts)
-          groups  = opts[:groups]
-          entries = opts[:entries]
+          groups  = opts[:groups]  || []
+          entries = opts[:entries] || []
           parent  = opts[:parent]
 
           # Remove groups and entries from options, so new group could be
@@ -137,14 +139,14 @@ module Keepassx
 
           entries.each do |e|
             add_entry e.merge(group: group)
-          end unless entries.nil?
+          end
 
           # Recursively proceed each child group
           groups.each do |g|
             parse_data g.merge(parent: group)
-          end unless groups.nil?
+          end
         end
-        # rubocop:enable Metrics/MethodLength, Style/MultilineIfModifier
+        # rubocop:enable Metrics/MethodLength
 
 
         def decrypt_payload(payload, final_key)
@@ -204,7 +206,7 @@ module Keepassx
 
 
         def initialize_payload
-          result = ''
+          result = +''
           @groups.each { |group| result << group.encode }
           @entries.each { |entry| result << entry.encode }
           result

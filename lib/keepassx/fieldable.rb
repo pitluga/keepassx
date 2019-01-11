@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Keepassx
   class Fieldable
 
@@ -67,7 +69,7 @@ module Keepassx
 
 
     def encode
-      buffer = ''
+      buffer = +''
       fields.each do |field|
         buffer << field.encode
       end
@@ -125,7 +127,7 @@ module Keepassx
 
       def get(name)
         field = @fields.find { |f| f.name == name.to_s }
-        field.data unless field.nil?
+        field&.data
       end
 
 

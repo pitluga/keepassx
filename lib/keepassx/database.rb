@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Keepassx
   class Database
 
@@ -197,7 +199,7 @@ module Keepassx
       end
 
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Style/SafeNavigation
       def build_entry_options(opts = {})
         if opts[:group]
           if opts[:group].is_a?(String) || opts[:group].is_a?(Hash)
@@ -218,7 +220,7 @@ module Keepassx
         end
         opts
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Style/SafeNavigation
 
 
       def valid_group?(object)

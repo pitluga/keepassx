@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The keepass file header.
 #
 # From the KeePass doc:

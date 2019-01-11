@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.6
   Exclude:
     - spec/**/*
 
@@ -59,3 +59,6 @@ Style/TrailingCommaInHashLiteral:
 
 Style/NumericPredicate:
   EnforcedStyle: comparison
+
+Style/UnpackFirst:
+  Enabled: false

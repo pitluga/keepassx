@@ -64,7 +64,7 @@ module Keepassx
         when :uuid
           16
         else
-          (@data.nil?) && 0 || @data.length
+          (@data.nil? && 0) || @data.length
         end
       end
 
@@ -79,10 +79,12 @@ module Keepassx
       private
 
 
+        # rubocop:disable Style/UnneededInterpolation
         def set_export_import_methods(type)
           @export_method = "#{type}".to_sym
           @import_method = "#{type}=".to_sym
         end
+        # rubocop:enable Style/UnneededInterpolation
 
 
         ### EXPORT METHODS
@@ -133,9 +135,11 @@ module Keepassx
 
         ### IMPORT METHODS
 
+        # rubocop:disable Naming/UncommunicativeMethodParamName
         def null=(_)
           @data = nil
         end
+        # rubocop:enable Naming/UncommunicativeMethodParamName
 
 
         def shunt=(value)
@@ -172,11 +176,11 @@ module Keepassx
           sec, min, hour, day, month, year = value.to_a
 
           @data = [
-              0x0000FFFF & ((year >> 6) & 0x0000003F),
-              0x0000FFFF & (((year & 0x0000003f) << 2) | ((month >> 2) & 0x00000003)),
-              0x0000FFFF & (((month & 0x00000003) << 6) | ((day & 0x0000001F) << 1) | ((hour >> 4) & 0x00000001)),
-              0x0000FFFF & (((hour & 0x0000000F) << 4) | ((min >> 2) & 0x0000000F)),
-              0x0000FFFF & (((min & 0x00000003) << 6) | (sec & 0x0000003F))
+            0x0000FFFF & ((year >> 6) & 0x0000003F),
+            0x0000FFFF & (((year & 0x0000003f) << 2) | ((month >> 2) & 0x00000003)),
+            0x0000FFFF & (((month & 0x00000003) << 6) | ((day & 0x0000001F) << 1) | ((hour >> 4) & 0x00000001)),
+            0x0000FFFF & (((hour & 0x0000000F) << 4) | ((min >> 2) & 0x0000000F)),
+            0x0000FFFF & (((min & 0x00000003) << 6) | (sec & 0x0000003F)),
           ].pack('<C5')
         end
 

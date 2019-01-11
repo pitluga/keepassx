@@ -2,6 +2,7 @@ module Keepassx
   module Field
     class Group < Base
 
+      # rubocop:disable Metrics/MethodLength
       def self.fields_description
         @fields_description ||= [
           [0x0, 'ignored',         :null],
@@ -14,9 +15,10 @@ module Keepassx
           [0x7, 'icon',            :int],
           [0x8, 'level',           :short],
           [0x9, 'flags',           :int],
-          [0xFFFF, 'terminator',   :null]
+          [0xFFFF, 'terminator',   :null],
         ]
       end
+      # rubocop:enable Metrics/MethodLength
 
     end
   end

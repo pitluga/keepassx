@@ -65,15 +65,16 @@ module Keepassx
 
     def group=(value)
       raise ArgumentError, "Expected Keepassx::Group, got #{value.class}" unless value.is_a?(Keepassx::Group)
+
       self.group_id = value.id
       @group        = value
-      value
     end
 
 
     private
 
 
+      # rubocop:disable Metrics/MethodLength
       def default_fields
         @default_fields ||= {
           id:              SecureRandom.uuid.gsub('-', ''),
@@ -90,19 +91,20 @@ module Keepassx
           expiration_time: Time.local(2999, 12, 28, 23, 59, 59),
           binary_desc:     nil,
           binary_data:     nil,
-          terminator:      nil
+          terminator:      nil,
         }
       end
+      # rubocop:enable Metrics/MethodLength
 
 
       # Keep this method private in order to avoid group/group_id divergence
-      def group_id=(v)
-        set :group_id, v
+      def group_id=(value)
+        set :group_id, value
       end
 
 
       def exclusion_list
-        super.concat(%w(binary_desc binary_data))
+        super.concat(%w[binary_desc binary_data])
       end
 
   end

@@ -1,7 +1,9 @@
 module Keepassx
   class Fieldable
 
-    def initialize(payload, &block)
+    attr_reader :fields
+
+    def initialize(payload)
       @fields = []
 
       if payload.is_a?(StringIO)
@@ -16,14 +18,11 @@ module Keepassx
 
     class << self
 
+      attr_reader :field_descriptor
+
       def set_field_descriptor(klass)
         @field_descriptor = klass
         create_fieldable_methods(klass.fields_description)
-      end
-
-
-      def field_descriptor
-        @field_descriptor
       end
 
 
@@ -48,11 +47,6 @@ module Keepassx
     end
 
 
-    def fields
-      @fields
-    end
-
-
     def length
       fields.map(&:length).reduce(&:+)
     end
@@ -65,6 +59,7 @@ module Keepassx
       fields.each do |field|
         next if excluded_field?(field.name)
         next if date_field?(field.name) && skip_date
+
         result[field.name] = field.data
       end
       result
@@ -86,7 +81,7 @@ module Keepassx
         if field_name == :password
           output << 'password=[FILTERED]'
         else
-          output << "#{field_name}=#{self.send(field_name)}" unless field_name == :terminator
+          output << "#{field_name}=#{send(field_name)}" unless field_name == :terminator
         end
       end
       "<#{self.class} #{output.join(', ')}>"
@@ -98,10 +93,13 @@ module Keepassx
 
       def decode_payload(payload)
         fields = []
-        begin
+
+        loop do
           field = self.class.field_descriptor.new(payload)
           fields << field
-        end while not field.terminator?
+          break if field.terminator?
+        end
+
         fields
       end
 
@@ -109,7 +107,7 @@ module Keepassx
       def build_payload(payload)
         fields = []
         default_fields.merge(payload).each do |k, v|
-          fields << self.class.field_descriptor.new({ name: k, data: v })
+          fields << self.class.field_descriptor.new(name: k, data: v)
         end
         fields
       end
@@ -126,15 +124,15 @@ module Keepassx
 
 
       def get(name)
-        field = @fields.find { |field| field.name == name.to_s }
+        field = @fields.find { |f| f.name == name.to_s }
         field.data unless field.nil?
       end
 
 
       def set(name, value)
-        field = @fields.find { |field| field.name == name.to_s }
+        field = @fields.find { |f| f.name == name.to_s }
         if field.nil?
-          field = self.class.field_descriptor.new({ name: name, data: value })
+          field = self.class.field_descriptor.new(name: name, data: value)
           @fields << field
         else
           field.data = value
@@ -149,12 +147,12 @@ module Keepassx
 
 
       def exclusion_list
-        %w(terminator)
+        %w[terminator]
       end
 
 
       def date_field?(field)
-        %w(creation_time last_mod_time last_acc_time expiration_time).include?(field)
+        %w[creation_time last_mod_time last_acc_time expiration_time].include?(field)
       end
 
   end

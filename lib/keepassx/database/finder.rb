@@ -38,7 +38,7 @@ module Keepassx
 
 
       def search(pattern)
-        backup = groups.find { |g| g.name == "Backup" }
+        backup = groups.find { |g| g.name == 'Backup' }
         backup_group_id = backup && backup.id
         entries.select { |e| e.group_id != backup_group_id && e.name =~ /#{pattern}/i }
       end
@@ -52,8 +52,8 @@ module Keepassx
         # @param item_type [Symbol] Can be :entry or :group.
         # @param opts [Hash] Search options.
         # @return [Keepassx::Group, Keepassx::Entry]
-        def find(item_type, opts = {}, &block)
-          item_list = (item_type == :entry) ? @entries : @groups
+        def find(item_type, opts = {})
+          item_list = item_type == :entry ? @entries : @groups
           items     = opts.empty? ? item_list : deep_search(item_list, opts)
 
           return items unless block_given?
@@ -64,6 +64,7 @@ module Keepassx
         end
 
 
+        # rubocop:disable Metrics/MethodLength
         def deep_search(item_list, opts = {})
           opts = { name: opts.to_s } if opts.is_a?(String) || opts.is_a?(Symbol)
 
@@ -87,6 +88,7 @@ module Keepassx
 
           items
         end
+        # rubocop:enable Metrics/MethodLength
 
 
         def filter_list(list)

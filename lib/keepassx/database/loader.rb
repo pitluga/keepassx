@@ -6,6 +6,7 @@ module Keepassx
       attr_reader :groups
       attr_reader :entries
 
+      # rubocop:disable Metrics/MethodLength
       def initialize(opts)
         @password = nil
         @groups   = []
@@ -28,12 +29,14 @@ module Keepassx
           opts.each { |item| parse_data(item) }
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
 
       # Unlock database.
       #
       # @param password [String] Database password.
       # @return [Boolean] Whether or not password validation successfull.
+      # rubocop:disable Metrics/MethodLength
       def unlock(password, keyfile = nil)
         return true unless locked?
 
@@ -58,12 +61,13 @@ module Keepassx
           entry.group = group
         end
 
-        @locked  = false
+        @locked = false
 
         true
       rescue OpenSSL::Cipher::CipherError
         false
       end
+      # rubocop:enable Metrics/MethodLength
 
 
       # Get actual payload checksum.
@@ -118,13 +122,16 @@ module Keepassx
 
 
         # See spec/fixtures/test_data_array.yaml for data example
+        # rubocop:disable Metrics/MethodLength, Style/MultilineIfModifier
         def parse_data(opts)
-          groups, entries, parent = opts[:groups], opts[:entries], opts[:parent]
+          groups  = opts[:groups]
+          entries = opts[:entries]
+          parent  = opts[:parent]
 
           # Remove groups and entries from options, so new group could be
           # initialized from incoming Hash
           fields          = Keepassx::Group.fields
-          group_opts      = opts.reject { |k, _| !fields.include? k.to_s }
+          group_opts      = opts.select { |k, _| fields.include?(k.to_s) }
           group           = add_group group_opts
           group.parent    = parent
 
@@ -137,6 +144,7 @@ module Keepassx
             parse_data g.merge(parent: group)
           end unless groups.nil?
         end
+        # rubocop:enable Metrics/MethodLength, Style/MultilineIfModifier
 
 
         def decrypt_payload(payload, final_key)
@@ -153,13 +161,10 @@ module Keepassx
         #
         #  @param list [Array] Array of groups.
         #  @return [Array] Updated array of groups.
+        # rubocop:disable Metrics/MethodLength
         def initialize_groups(list)
           list.each_with_index do |group, index|
-            if index == 0
-              previous_group = nil
-            else
-              previous_group = list[index - 1]
-            end
+            previous_group = index == 0 ? nil : list[index - 1]
 
             # If group is first entry or has level equal 0,
             # it gets parent set to nil
@@ -189,12 +194,13 @@ module Keepassx
 
             # Invalid level
             else
-              fail "Unexpected level '#{group.level}' for group '#{group.name}'"
+              raise "Unexpected level '#{group.level}' for group '#{group.name}'"
             end
           end
 
           list
         end
+        # rubocop:enable Metrics/MethodLength
 
 
         def initialize_payload

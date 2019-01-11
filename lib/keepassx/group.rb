@@ -81,13 +81,14 @@ module Keepassx
     end
 
 
-    def ==(value)
-      return false if value.nil?
-      parent == value.parent &&
-      name   == value.name &&
-      id     == value.id &&
-      level  == value.level &&
-      icon   == value.icon
+    def ==(other)
+      return false if other.nil?
+
+      parent == other.parent  &&
+        name   == other.name  &&
+        id     == other.id    &&
+        level  == other.level &&
+        icon   == other.icon
     end
 
 
@@ -97,13 +98,13 @@ module Keepassx
       # Redefine #level= to make it private :
       # Setting group level only is a non-sense as it depends
       # on parent group.
-      def level=(v)
-        set :level, v
+      def level=(value)
+        set :level, value
       end
 
 
       def default_fields
-        @default_field ||= {
+        @default_fields ||= {
           id:              :unknown,
           name:            :unknown,
           creation_time:   Time.now,
@@ -113,7 +114,7 @@ module Keepassx
           icon:            1,
           level:           0,
           flags:           0,
-          terminator:      nil
+          terminator:      nil,
         }
       end
 

@@ -26,6 +26,7 @@ module Keepassx
     #
     # @param opts [Hash] Options that will be passed to Keepassx::Group#new.
     # @return [Keepassx::Group]
+    # rubocop:disable Metrics/MethodLength
     def add_group(opts)
       raise ArgumentError, "Expected Hash or Keepassx::Group, got #{opts.class}" unless valid_group?(opts)
 
@@ -55,6 +56,7 @@ module Keepassx
         group
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
 
     # Add new entry to database.
@@ -144,13 +146,11 @@ module Keepassx
       #  @param parent [Keepassx::Group] Last sibling group.
       #  @return [Integer] index Group index.
       def last_sibling_index(parent)
-        if groups.empty?
-          return -1
+        return -1 if groups.empty?
 
-        elsif parent.nil?
+        if parent.nil?
           parent_index  = 0
           sibling_level = 1
-
         else
           parent_index  = groups.find_index(parent)
           sibling_level = parent.level + 1
@@ -177,12 +177,13 @@ module Keepassx
 
 
       def build_group_options(opts = {})
-        opts[:id] = next_group_id unless opts.has_key?(:id)
+        opts[:id] = next_group_id unless opts.key?(:id)
 
         # Replace parent, which is specified by symbol with actual group
         if opts[:parent].is_a?(Symbol)
           group = find_group(opts[:parent])
           raise "Group #{opts[:parent].inspect} does not exist" if group.nil?
+
           opts[:parent] = group
         end
         opts
@@ -196,11 +197,13 @@ module Keepassx
       end
 
 
+      # rubocop:disable Metrics/MethodLength
       def build_entry_options(opts = {})
         if opts[:group]
           if opts[:group].is_a?(String) || opts[:group].is_a?(Hash)
             group = find_group(opts[:group])
             raise "Group #{opts[:group].inspect} does not exist" if group.nil?
+
             opts[:group] = group
             opts[:group_id] = group.id
           elsif opts[:group].is_a?(Keepassx::Group)
@@ -210,10 +213,12 @@ module Keepassx
         elsif opts[:group_id] && opts[:group_id].is_a?(Integer)
           group = find_group(id: opts[:group_id])
           raise "Group #{opts[:group_id].inspect} does not exist" if group.nil?
+
           opts[:group] = group
         end
         opts
       end
+      # rubocop:enable Metrics/MethodLength
 
 
       def valid_group?(object)

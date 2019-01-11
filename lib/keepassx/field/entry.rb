@@ -2,6 +2,7 @@ module Keepassx
   module Field
     class Entry < Base
 
+      # rubocop:disable Metrics/MethodLength
       def self.fields_description
         @fields_description ||= [
           [0x0, 'ignored',         :null],
@@ -19,9 +20,10 @@ module Keepassx
           [0xc, 'expiration_time', :date],
           [0xd, 'binary_desc',     :string],
           [0xe, 'binary_data',     :shunt],
-          [0xFFFF, 'terminator',   :null]
+          [0xFFFF, 'terminator',   :null],
         ]
       end
+      # rubocop:enable Metrics/MethodLength
 
     end
   end

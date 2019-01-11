@@ -37,11 +37,11 @@ module Keepassx
   class Header
 
     ENCRYPTION_FLAGS = [
-      [1 , 'SHA2'    ],
-      [2 , 'Rijndael'],
-      [2 , 'AES'     ],
-      [4 , 'ArcFour' ],
-      [8 , 'TwoFish' ],
+      [1, 'SHA2'],
+      [2, 'Rijndael'],
+      [2, 'AES'],
+      [4, 'ArcFour'],
+      [8, 'TwoFish'],
     ].freeze
 
     SIGNATURES = [0x9AA2D903, 0xB54BFB65].freeze
@@ -52,6 +52,7 @@ module Keepassx
     attr_accessor :content_hash
 
 
+    # rubocop:disable Metrics/MethodLength
     def initialize(header_bytes = nil)
       if header_bytes.nil?
         @signature1    = SIGNATURES[0]
@@ -63,7 +64,7 @@ module Keepassx
         @groups_count  = 0
         @entries_count = 0
         @master_seed2  = SecureRandom.random_bytes(32)
-        @rounds        = 50000
+        @rounds        = 50_000
       else
         header_bytes   = StringIO.new(header_bytes)
         @signature1    = header_bytes.read(4).unpack('L*').first
@@ -79,6 +80,7 @@ module Keepassx
         @rounds        = header_bytes.read(4).unpack('L*').first
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
 
     def valid?
@@ -94,17 +96,13 @@ module Keepassx
     end
 
 
+    # rubocop:disable Metrics/MethodLength
     def final_key(master_key, keyfile_data = nil)
       key = Digest::SHA2.new.update(master_key).digest
 
       if keyfile_data
         keyfile_hash = extract_keyfile_hash(keyfile_data)
-
-        if master_key == ''
-          key = keyfile_hash
-        else
-          key = Digest::SHA2.new.update(key + keyfile_hash).digest
-        end
+        key = master_key == '' ? keyfile_hash : Digest::SHA2.new.update(key + keyfile_hash).digest
       end
 
       aes = OpenSSL::Cipher.new('AES-256-ECB')
@@ -112,7 +110,7 @@ module Keepassx
       aes.key = @master_seed2
       aes.padding = 0
 
-      @rounds.times do |i|
+      @rounds.times do
         key = aes.update(key) + aes.final
       end
 
@@ -120,23 +118,24 @@ module Keepassx
       key = Digest::SHA2.new.update(@master_seed + key).digest
       key
     end
+    # rubocop:enable Metrics/MethodLength
 
 
     # Return encoded header
     #
     # @return [String] Encoded header representation.
     def encode
-      [@signature1].pack('L*')    <<
-      [@signature2].pack('L*')    <<
-      [@flags].pack('L*')         <<
-      [@version].pack('L*')       <<
-      @master_seed                <<
-      @encryption_iv              <<
-      [@groups_count].pack('L*')  <<
-      [@entries_count].pack('L*') <<
-      @content_hash               <<
-      @master_seed2               <<
-      [@rounds].pack('L*')
+      [@signature1].pack('L*')      <<
+        [@signature2].pack('L*')    <<
+        [@flags].pack('L*')         <<
+        [@version].pack('L*')       <<
+        @master_seed                <<
+        @encryption_iv              <<
+        [@groups_count].pack('L*')  <<
+        [@entries_count].pack('L*') <<
+        @content_hash               <<
+        @master_seed2               <<
+        [@rounds].pack('L*')
     end
 
 

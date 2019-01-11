@@ -1,7 +1,7 @@
 require 'simplecov'
 require 'rspec'
 require 'respect'
-require 'factory_girl'
+require 'factory_bot'
 
 # Start Simplecov
 SimpleCov.start do
@@ -10,7 +10,7 @@ end
 
 # Configure RSpec
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.color = true
   config.fail_fast = false

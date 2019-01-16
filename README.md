@@ -3,9 +3,6 @@
 [![GitHub license](https://img.shields.io/github/license/pitluga/keepassx.svg)](https://github.com/pitluga/keepassx/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/pitluga/keepassx.svg)](https://github.com/pitluga/keepassx/releases/latest)
 [![Build Status](https://travis-ci.org/pitluga/keepassx.svg?branch=master)](https://travis-ci.org/pitluga/keepassx)
-[![Code Climate](https://codeclimate.com/github/pitluga/keepassx/badges/gpa.svg)](https://codeclimate.com/github/pitluga/keepassx)
-[![Test Coverage](https://codeclimate.com/github/pitluga/keepassx/badges/coverage.svg)](https://codeclimate.com/github/pitluga/keepassx/coverage)
-[![Dependency Status](https://gemnasium.com/pitluga/keepassx.svg)](https://gemnasium.com/pitluga/keepassx)
 
 ### A Ruby library to read and write [KeePassX](http://www.keepassx.org/) databases.
 

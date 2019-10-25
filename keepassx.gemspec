@@ -4,7 +4,7 @@ require_relative 'lib/keepassx/version'
 
 Gem::Specification.new do |s|
   s.name        = 'keepassx'
-  s.version     = Keepassx::VERSION
+  s.version     = Keepassx::VERSION::STRING
   s.authors     = ['Tony Pitluga', 'Paul Hinze']
   s.email       = ['tony.pitluga@gmail.com', 'paul.t.hinze@gmail.com']
   s.homepage    = 'http://github.com/pitluga/keepassx'

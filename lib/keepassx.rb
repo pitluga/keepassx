@@ -7,18 +7,10 @@ require 'securerandom'
 require 'digest/sha2'
 require 'yaml'
 
-require 'keepassx/database/dumper'
-require 'keepassx/database/loader'
-require 'keepassx/database/finder'
-require 'keepassx/database'
-require 'keepassx/field/base'
-require 'keepassx/field/entry'
-require 'keepassx/field/group'
-require 'keepassx/fieldable'
-require 'keepassx/entry'
-require 'keepassx/group'
-require 'keepassx/header'
-require 'keepassx/aes_crypt'
+require 'zeitwerk'
+loader = Zeitwerk::Loader.for_gem
+loader.inflector.inflect 'aes_crypt' => 'AESCrypt'
+loader.setup
 
 module Keepassx
   class << self

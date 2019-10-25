@@ -150,12 +150,12 @@ module Keepassx
 
 
         def decrypt_payload(payload, final_key)
-          AESCrypt.decrypt(payload, final_key, header.encryption_iv, 'AES-256-CBC')
+          Keepassx::AESCrypt.decrypt(payload, final_key, header.encryption_iv, 'AES-256-CBC')
         end
 
 
         def encrypt_payload(payload, final_key)
-          AESCrypt.encrypt(payload, final_key, header.encryption_iv, 'AES-256-CBC')
+          Keepassx::AESCrypt.encrypt(payload, final_key, header.encryption_iv, 'AES-256-CBC')
         end
 
 

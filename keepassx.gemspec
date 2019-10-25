@@ -12,7 +12,11 @@ Gem::Specification.new do |s|
   s.description = 'See http://github.com/pitluga/keepassx'
   s.license     = 'MIT'
 
+  s.required_ruby_version = '>= 2.4.4'
+
   s.files = `git ls-files`.split("\n")
+
+  s.add_runtime_dependency 'zeitwerk'
 
   s.add_development_dependency 'factory_bot'
   s.add_development_dependency 'guard-rspec'

@@ -27,16 +27,7 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 end
 
-# Load lib
-require 'keepassx'
-require_relative 'factories'
-
-FIXTURE_PATH          = File.expand_path File.join(File.dirname(__FILE__), 'fixtures')
-TEST_DATABASE_PATH    = File.join(FIXTURE_PATH, 'database_test.kdb')
-EMPTY_DATABASE_PATH   = File.join(FIXTURE_PATH, 'database_empty.kdb')
-KEYFILE_DATABASE_PATH = File.join(FIXTURE_PATH, 'database_with_key.kdb')
-
-
+# Configure/Patch Respect
 module RespectPatch
   def validate_uuid(uuid)
     return true if uuid =~ /\A[0-9a-f]{32}\z/i
@@ -52,3 +43,13 @@ end
 
 Respect::FormatValidator.prepend(RespectPatch)
 Respect.extend_dsl_with(UUIDValidator)
+
+
+# Load lib
+require 'keepassx'
+require_relative 'support/factories'
+
+FIXTURE_PATH          = File.expand_path File.join(File.dirname(__FILE__), 'fixtures')
+TEST_DATABASE_PATH    = File.join(FIXTURE_PATH, 'database_test.kdb')
+EMPTY_DATABASE_PATH   = File.join(FIXTURE_PATH, 'database_empty.kdb')
+KEYFILE_DATABASE_PATH = File.join(FIXTURE_PATH, 'database_with_key.kdb')

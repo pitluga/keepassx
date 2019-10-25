@@ -1,6 +1,6 @@
 FactoryBot.define do
 
-  factory :group, class: Keepassx::Group do
+  factory :group, class: 'Keepassx::Group' do
     id    { 1 }
     name  { 'test_group' }
     icon  { 20 }
@@ -8,7 +8,7 @@ FactoryBot.define do
     initialize_with { new(attributes) }
   end
 
-  factory :entry, class: Keepassx::Entry do
+  factory :entry, class: 'Keepassx::Entry' do
     name      { 'test_entry' }
     group     { build(:group) }
     username  { 'test' }

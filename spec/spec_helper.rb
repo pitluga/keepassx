@@ -5,7 +5,7 @@ require 'factory_bot'
 
 # Start Simplecov
 SimpleCov.start do
-  add_filter '/spec/'
+  add_filter 'spec/'
 end
 
 # Configure RSpec
@@ -38,17 +38,9 @@ KEYFILE_DATABASE_PATH = File.join(FIXTURE_PATH, 'database_with_key.kdb')
 
 
 module RespectPatch
-  def self.included(base)
-    base.send(:prepend, InstanceMethods)
-  end
-
-  module InstanceMethods
-
-    def validate_uuid(uuid)
-      return true if uuid =~ /\A[0-9a-f]{32}\z/i
-      raise Respect::ValidationError, "invalid UUID"
-    end
-
+  def validate_uuid(uuid)
+    return true if uuid =~ /\A[0-9a-f]{32}\z/i
+    raise Respect::ValidationError, "invalid UUID"
   end
 end
 
@@ -58,8 +50,5 @@ module UUIDValidator
   end
 end
 
-unless Respect::FormatValidator.included_modules.include?(RespectPatch)
-  Respect::FormatValidator.send(:include, RespectPatch)
-end
-
+Respect::FormatValidator.prepend(RespectPatch)
 Respect.extend_dsl_with(UUIDValidator)

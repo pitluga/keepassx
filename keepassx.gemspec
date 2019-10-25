@@ -15,9 +15,8 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
 
   s.add_development_dependency 'factory_bot'
-  s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-rspec'
-  s.add_development_dependency 'rake', '~> 10.4'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'respect'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'simplecov'

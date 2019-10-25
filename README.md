@@ -2,6 +2,7 @@
 
 [![GitHub license](https://img.shields.io/github/license/pitluga/keepassx.svg)](https://github.com/pitluga/keepassx/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/pitluga/keepassx.svg)](https://github.com/pitluga/keepassx/releases/latest)
+[![Gem](https://img.shields.io/gem/v/keepassx.svg)](https://rubygems.org/gems/keepassx)
 [![Gem](https://img.shields.io/gem/dtv/keepassx.svg)](https://rubygems.org/gems/keepassx)
 [![Build Status](https://travis-ci.org/pitluga/keepassx.svg?branch=master)](https://travis-ci.org/pitluga/keepassx)
 

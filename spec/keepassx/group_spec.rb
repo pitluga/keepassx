@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Keepassx::Group do
+RSpec.describe Keepassx::Group do
 
   let :group_schema do
     Respect::HashSchema.define do |s|

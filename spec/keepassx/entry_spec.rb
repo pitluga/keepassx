@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Keepassx::Entry do
+RSpec.describe Keepassx::Entry do
 
   let :entry_schema do
     Respect::HashSchema.define do |s|

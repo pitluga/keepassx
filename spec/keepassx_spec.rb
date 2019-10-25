@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Keepassx do
+RSpec.describe Keepassx do
 
   describe '.new' do
     it 'should allow creation of database from scratch' do

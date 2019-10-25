@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Keepassx::Database do
+RSpec.describe Keepassx::Database do
 
   GROUPS_COUNT  = 5
   ENTRIES_COUNT = 5

@@ -137,11 +137,9 @@ module Keepassx
 
         ### IMPORT METHODS
 
-        # rubocop:disable Naming/UncommunicativeMethodParamName
         def null=(_)
           @data = nil
         end
-        # rubocop:enable Naming/UncommunicativeMethodParamName
 
 
         def shunt=(value)

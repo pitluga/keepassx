@@ -7,5 +7,3 @@ rvm:
   - 2.4.9
   - ruby-head
   - jruby-9.2.8.0
-after_success:
-  - bundle exec codeclimate-test-reporter

@@ -7,7 +7,7 @@ rvm:
   - 2.5.7
   - 2.4.9
   - ruby-head
-  - jruby-9.2.8.0
+  - jruby-9.2.9.0
 matrix:
   allow_failures:
-    - rvm: jruby-9.2.8.0
+    - rvm: jruby-9.2.9.0

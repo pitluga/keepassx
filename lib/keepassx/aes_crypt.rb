@@ -4,7 +4,7 @@ module Keepassx
   module AESCrypt
     module_function
 
-    # rubocop:disable Naming/UncommunicativeMethodParamName
+    # rubocop:disable Naming/MethodParameterName
     def decrypt(encrypted_data, key, iv, cipher_type)
       aes = OpenSSL::Cipher.new(cipher_type)
       aes.decrypt
@@ -12,10 +12,10 @@ module Keepassx
       aes.iv  = iv unless iv.nil?
       aes.update(encrypted_data) + aes.final
     end
-    # rubocop:enable Naming/UncommunicativeMethodParamName
+    # rubocop:enable Naming/MethodParameterName
 
 
-    # rubocop:disable Naming/UncommunicativeMethodParamName
+    # rubocop:disable Naming/MethodParameterName
     def encrypt(data, key, iv, cipher_type)
       aes = OpenSSL::Cipher.new(cipher_type)
       aes.encrypt
@@ -23,7 +23,7 @@ module Keepassx
       aes.iv  = iv unless iv.nil?
       aes.update(data) + aes.final
     end
-    # rubocop:enable Naming/UncommunicativeMethodParamName
+    # rubocop:enable Naming/MethodParameterName
 
   end
 end

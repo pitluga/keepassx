@@ -4,10 +4,10 @@ AllCops:
     - bin/*
     - spec/**/*
 
-Documentation:
+Style/Documentation:
   Enabled: false
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
 Layout/EmptyLines:
@@ -28,10 +28,10 @@ Layout/EmptyLineBetweenDefs:
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
-Metrics/AbcSize:
+Layout/LineLength:
   Enabled: false
 
-Metrics/LineLength:
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:

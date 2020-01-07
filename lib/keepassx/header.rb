@@ -69,17 +69,17 @@ module Keepassx
         @rounds        = 50_000
       else
         header_bytes   = StringIO.new(header_bytes)
-        @signature1    = header_bytes.read(4).unpack('L*').first
-        @signature2    = header_bytes.read(4).unpack('L*').first
-        @flags         = header_bytes.read(4).unpack('L*').first
-        @version       = header_bytes.read(4).unpack('L*').first
+        @signature1    = header_bytes.read(4).unpack1('L*')
+        @signature2    = header_bytes.read(4).unpack1('L*')
+        @flags         = header_bytes.read(4).unpack1('L*')
+        @version       = header_bytes.read(4).unpack1('L*')
         @master_seed   = header_bytes.read(16)
         @encryption_iv = header_bytes.read(16)
-        @groups_count  = header_bytes.read(4).unpack('L*').first
-        @entries_count = header_bytes.read(4).unpack('L*').first
+        @groups_count  = header_bytes.read(4).unpack1('L*')
+        @entries_count = header_bytes.read(4).unpack1('L*')
         @content_hash  = header_bytes.read(32)
         @master_seed2  = header_bytes.read(32)
-        @rounds        = header_bytes.read(4).unpack('L*').first
+        @rounds        = header_bytes.read(4).unpack1('L*')
       end
     end
     # rubocop:enable Metrics/MethodLength

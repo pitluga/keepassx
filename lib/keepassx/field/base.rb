@@ -107,18 +107,18 @@ module Keepassx
 
 
         def int
-          @data.unpack('I')[0]
+          @data.unpack1('I')
         end
 
 
         def short
-          @data.unpack('S')[0]
+          @data.unpack1('S')
         end
 
 
         def ascii
           # TODO: Add spec
-          @data.unpack('H*')[0]
+          @data.unpack1('H*')
         end
 
 

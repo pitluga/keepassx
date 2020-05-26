@@ -5,7 +5,6 @@ rvm:
   - 2.7.0
   - 2.6.5
   - 2.5.7
-  - 2.4.9
   - ruby-head
   - jruby-9.2.9.0
 matrix:

@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/pitluga/keepassx.svg)](https://github.com/pitluga/keepassx/releases/latest)
 [![Gem](https://img.shields.io/gem/v/keepassx.svg)](https://rubygems.org/gems/keepassx)
 [![Gem](https://img.shields.io/gem/dtv/keepassx.svg)](https://rubygems.org/gems/keepassx)
-[![Build Status](https://travis-ci.org/pitluga/keepassx.svg?branch=master)](https://travis-ci.org/pitluga/keepassx)
+[![CI](https://github.com/pitluga/keepassx/workflows/CI/badge.svg)](https://github.com/pitluga/keepassx/actions)
 
 ### A Ruby library to read and write [KeePassX](http://www.keepassx.org/) databases.
 

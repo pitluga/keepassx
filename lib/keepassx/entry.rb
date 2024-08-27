@@ -106,7 +106,7 @@ module Keepassx
 
 
       def exclusion_list
-        super.concat(%w[binary_desc binary_data])
+        super.push('binary_desc', 'binary_data')
       end
 
   end

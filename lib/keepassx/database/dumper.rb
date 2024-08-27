@@ -8,9 +8,7 @@ module Keepassx
       #
       # @return [Array]
       def to_a(opts = {})
-        result = []
-        find_groups(level: 0).each { |group| result << build_branch(group, opts) }
-        result
+        find_groups(level: 0).map { |group| build_branch(group, opts) }
       end
 
 

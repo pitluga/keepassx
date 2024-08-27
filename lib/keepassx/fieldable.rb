@@ -34,7 +34,7 @@ module Keepassx
             get method
           end
 
-          define_method "#{method}=" do |v|
+          define_method :"#{method}=" do |v|
             set method, v
           end
         end

@@ -5,7 +5,14 @@ RSpec.describe Keepassx::Database do
   GROUPS_COUNT  = 5
   ENTRIES_COUNT = 5
 
-  let(:data_array) { YAML.load(File.read(File.join(FIXTURE_PATH, 'test_data_array.yml'))) }
+  let(:data_array) do
+    if RUBY_VERSION >= '3.1.0'
+      YAML.load(File.read(File.join(FIXTURE_PATH, 'test_data_array.yml')), permitted_classes: [Symbol, Time])
+    else
+      YAML.load(File.read(File.join(FIXTURE_PATH, 'test_data_array.yml')))
+    end
+  end
+
   let(:data_array_dumped) { File.read(File.join(FIXTURE_PATH, 'test_data_array_dumped.yml')) }
 
   let(:test_db) { Keepassx::Database.new(TEST_DATABASE_PATH) }

@@ -4,9 +4,7 @@ module Keepassx
   class Database
     module Loader
 
-      attr_reader :header
-      attr_reader :groups
-      attr_reader :entries
+      attr_reader :header, :groups, :entries
 
       # rubocop:disable Metrics/MethodLength
       def initialize(opts)

@@ -49,9 +49,7 @@ module Keepassx
     SIGNATURES = [0x9AA2D903, 0xB54BFB65].freeze
 
     attr_reader   :encryption_iv
-    attr_accessor :groups_count
-    attr_accessor :entries_count
-    attr_accessor :content_hash
+    attr_accessor :groups_count, :entries_count, :content_hash
 
 
     # rubocop:disable Metrics/MethodLength

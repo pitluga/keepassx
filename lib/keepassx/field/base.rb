@@ -81,12 +81,10 @@ module Keepassx
       private
 
 
-        # rubocop:disable Style/RedundantInterpolation
         def set_export_import_methods(type)
-          @export_method = "#{type}".to_sym
-          @import_method = "#{type}=".to_sym
+          @export_method = :"#{type}"
+          @import_method = :"#{type}="
         end
-        # rubocop:enable Style/RedundantInterpolation
 
 
         ### EXPORT METHODS

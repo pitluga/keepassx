@@ -179,7 +179,7 @@ module Keepassx
             0x0000FFFF & (((month & 0x00000003) << 6) | ((day & 0x0000001F) << 1) | ((hour >> 4) & 0x00000001)),
             0x0000FFFF & (((hour & 0x0000000F) << 4) | ((min >> 2) & 0x0000000F)),
             0x0000FFFF & (((min & 0x00000003) << 6) | (sec & 0x0000003F)),
-          ].pack('<C5')
+          ].pack('C5')
         end
 
     end
